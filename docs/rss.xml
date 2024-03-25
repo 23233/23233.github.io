@@ -1,2 +1,30 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://Meekdai.github.io/Gmeek-template</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://Meekdai.github.io/Gmeek-template</link></image><lastBuildDate>Thu, 14 Mar 2024 09:17:29 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>请接着之后的安装步骤执行</title><link>https://Meekdai.github.io/Gmeek-template/post/qing-jie-zhao-zhi-hou-de-an-zhuang-bu-zou-zhi-xing.html</link><description>如果你点击了`READM.md`的链接后，看到了这个页面，请继续之后的安装步骤执行。</description><guid isPermaLink="true">https://Meekdai.github.io/Gmeek-template/post/qing-jie-zhao-zhi-hou-de-an-zhuang-bu-zou-zhi-xing.html</guid><pubDate>Thu, 14 Mar 2024 09:15:10 +0000</pubDate></item><item><title>这是Gmeek模板仓库</title><link>https://Meekdai.github.io/Gmeek-template/post/zhe-shi-Gmeek-mo-ban-cang-ku.html</link><description>通过这个模板创建库，可以大大减少部署Gmeek博客的配置步骤。</description><guid isPermaLink="true">https://Meekdai.github.io/Gmeek-template/post/zhe-shi-Gmeek-mo-ban-cang-ku.html</guid><pubDate>Wed, 20 Dec 2023 07:42:24 +0000</pubDate></item></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Blog Title</title><link>https://23233.github.io</link><description>Blog description</description><copyright>Blog Title</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://github.githubassets.com/favicons/favicon.svg</url><title>avatar</title><link>https://23233.github.io</link></image><lastBuildDate>Mon, 25 Mar 2024 08:07:56 +0000</lastBuildDate><managingEditor>Blog Title</managingEditor><ttl>60</ttl><webMaster>Blog Title</webMaster><item><title>python版本的请求与golang版本的请求差别</title><link>https://23233.github.io/post/python-ban-ben-de-qing-qiu-yu-golang-ban-ben-de-qing-qiu-cha-bie.html</link><description>## 对于query的escape处理策略不同&#13;
+* python 如果使用 `urllib.parse.quote` 默认会有一个safe 其中对于 `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-~/` 这些字符默认是不进行转换的.&#13;
+* golang 使用 ` url.QueryEscape` 默认是会把所有的符号和字符都会序列化 因为按照要求http标准的要求是要保证query没有特殊字符的&#13;
+* 但是这点在进行一些爬虫业务时候特别不友好 其中以 `/` 被序列化最为致命 所以在golang中可以使用以下方法进行序列化保证与python的一致&#13;
+```golang&#13;
+func CustomQueryEscape(s string) string {&#13;
+	// 定义不需要转义的字符&#13;
+	safeChars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-~/"&#13;
+&#13;
+	// 创建一个字符串构建器&#13;
+	var escaped strings.Builder&#13;
+&#13;
+	// 遍历字符串中的每个字符&#13;
+	for _, char := range s {&#13;
+		// 如果字符在 safeChars 中，则直接添加到结果中&#13;
+		if strings.ContainsRune(safeChars, char) {&#13;
+			escaped.WriteRune(char)&#13;
+		} else {&#13;
+			// 否则，使用 url.QueryEscape 对字符进行编码&#13;
+			escaped.WriteString(url.QueryEscape(string(char)))&#13;
+		}&#13;
+	}&#13;
+&#13;
+	return escaped.String()&#13;
+}&#13;
+```&#13;
+## 请求的区别&#13;
+* 如果使用requests 默认就是http1 因为没有http2&#13;
+* 而golang默认就是http2 自动协商的。</description><guid isPermaLink="true">https://23233.github.io/post/python-ban-ben-de-qing-qiu-yu-golang-ban-ben-de-qing-qiu-cha-bie.html</guid><pubDate>Mon, 25 Mar 2024 08:07:28 +0000</pubDate></item></channel></rss>
