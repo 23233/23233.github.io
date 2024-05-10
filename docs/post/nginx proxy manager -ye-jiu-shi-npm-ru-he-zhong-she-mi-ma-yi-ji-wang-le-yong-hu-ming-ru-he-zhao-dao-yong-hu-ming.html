@@ -9,9 +9,9 @@
         let theme = localStorage.getItem("meek_theme") || "light";
         document.documentElement.setAttribute("data-color-mode", theme);
     </script>
-<meta name="description" content="再测试一下">
-<title>再测试一下</title>
-
+<meta name="description" content="nginx proxy manager 也就是npm如何重设密码以及忘了用户名如何找到用户名">
+<title>nginx proxy manager 也就是npm如何重设密码以及忘了用户名如何找到用户名</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
 
 </head>
 <style>
@@ -41,7 +41,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 
 <body>
     <div id="header">
-<h1 class="postTitle">再测试一下</h1>
+<h1 class="postTitle">nginx proxy manager 也就是npm如何重设密码以及忘了用户名如何找到用户名</h1>
 <div class="title-right">
     <a href="https://23233.github.io" id="buttonHome" class="btn btn-invisible circle" title="首页">
         <svg class="octicon" width="16" height="16">
@@ -49,7 +49,7 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
         </svg>
     </a>
     
-    <a href="https://github.com/23233/23233.github.io/issues/4" target="_blank" class="btn btn-invisible circle" title="Issue">
+    <a href="https://github.com/23233/23233.github.io/issues/2" target="_blank" class="btn btn-invisible circle" title="Issue">
         <svg class="octicon" width="16" height="16">
             <path id="pathIssue" fill-rule="evenodd"></path>
         </svg>
@@ -65,7 +65,24 @@ body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;
 </div>
 </div>
     <div id="content">
-<div class="markdown-body" id="postBody"><p>测试的内容</p></div>
+<div class="markdown-body" id="postBody"><h2>本教程仅适用于使用docker部署</h2>
+<h3>重设密码</h3>
+<p>这里面有两个镜像 一个是官方的 一个是 <code class="notranslate">jlesage</code>的 对比其中的话 <code class="notranslate">jlesage</code> 有快捷工具</p>
+<h4>官方镜像使用mysql</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker <span class="pl-c1">exec</span> -it nginx-proxy-manager sh
+mysql -u root -p
+use nginxproxymanager<span class="pl-k">;</span>
+UPDATE user SET is_deleted=1<span class="pl-k">;</span></pre></div>
+<h4>jlesage的镜像</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate"> /opt/nginx-proxy-manager/bin/reset-password name@example.com newpassword</pre></div>
+<h3>忘记邮箱/用户名</h3>
+<h4>使用mysql</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker <span class="pl-c1">exec</span> -it nginx-proxy-manager sh
+mysql -u root -p
+use nginxproxymanager<span class="pl-k">;</span>
+<span class="pl-k">select</span> <span class="pl-smi">*</span> from user<span class="pl-k">;</span></pre></div>
+<h4>使用sqlite</h4>
+<p>直接通过docker 把sqlite的db映射出去 然后随便拿一个软件 打开sqlite 就能看到 没加密</p></div>
 <div style="font-size:small;margin-top:8px;float:right;"></div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
